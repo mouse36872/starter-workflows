@@ -22,3 +22,22 @@ For example: `ci/python-django.yml` and `ci/python-django.properties.json`.
 * `description`: the description shown in onboarding
 * `iconName`: the icon name in the relevant folder, for example `django` should have an icon `icons/django.svg`. Only SVG is supported at this time
 * `categories`: the categories that it will be shown under
+version: '2'
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    env_file: .env
+    depends_on:
+      - db
+    volumes:
+      - ./webapp:/opt/webapp
+  db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
